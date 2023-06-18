@@ -46,7 +46,7 @@ bot.on(message('text'), async ctx => {
 bot.on(message('voice'), async ctx => {
     ctx.session ??= INITIAL_SESSION
     try {
-        await ctx.reply(code('Ну всё...жопа'))
+        await ctx.reply(code('Ожидаем...'))
         const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id)
         const userId = String(ctx.message.from.id)
         const oggPath = await ogg.create(link.href, userId)
