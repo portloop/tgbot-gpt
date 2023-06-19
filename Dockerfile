@@ -7,4 +7,4 @@ RUN npm ci
 
 COPY src /app/src
 
-CMD ["node", "main.js"]
+CMD ["node", "src/main.js"]
