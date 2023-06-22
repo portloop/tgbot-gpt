@@ -5,6 +5,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-COPY src /app/src
+COPY . .
 
-CMD ["node", "src/main.js"]
+ENV PORT=3000
+
+EXPOSE $PORT
+CMD ["npm", "start"]

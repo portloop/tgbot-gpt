@@ -1,5 +1,5 @@
-build:
+build: 
 	docker build -t tgbot .
 
-run:
-	docker run -d --name tgbot --rm tgbot
+run: 
+	docker run -t -p 3000:3000 --name tgbot --rm tgbot
