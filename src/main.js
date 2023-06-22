@@ -1,12 +1,12 @@
-import { Telegraf, session  } from "telegraf";
+import { Telegraf, session } from "telegraf";
 import { message } from 'telegraf/filters'
 import { code } from 'telegraf/format'
-import config from 'config'
 import { ogg } from './ogg.js'
 import { openai } from "./openai.js";
 
 console.log(config.get('TEST_ENV'))
 
+const OPENAI_API = "your_openai_api_key_here";
 
 const INITIAL_SESSION = {
     messages: []
@@ -31,7 +31,7 @@ bot.on(message('text'), async ctx => {
     try {
         await ctx.reply(code('Загружаю, подожди'))
         ctx.session.messages.push({role: openai.roles.USER, content: ctx.message.text})
-        const response = await openai.chat(ctx.session.messages)
+        const response = await openai.chat(ctx.session.messages, OPENAI_API)
 
         ctx.session.messages.push({role: openai.roles.ASSISTANT, content: response.content})
 
@@ -56,7 +56,7 @@ bot.on(message('voice'), async ctx => {
         await ctx.reply(code(`Твой запрос: ${text}`))
 
         ctx.session.messages.push({role: openai.roles.USER, content: text})
-        const response = await openai.chat(ctx.session.messages)
+        const response = await openai.chat(ctx.session.messages, OPENAI_API)
 
         ctx.session.messages.push({role: openai.roles.ASSISTANT, content: response.content})
 
@@ -67,9 +67,7 @@ bot.on(message('voice'), async ctx => {
     }
 })
 
-
-
 bot.launch()
 
-process.once('SIGINT', () => bot.stop('SIGINT')) 
-process.once('SIGTERM', () => bot.stop('SIGTERM')) 
+process.once('SIGINT', () => bot.stop('SIGINT'))
+process.once('SIGTERM', () => bot.stop('SIGTERM'))
